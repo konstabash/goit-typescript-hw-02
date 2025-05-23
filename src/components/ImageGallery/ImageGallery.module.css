@@ -1,0 +1,13 @@
+.gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 1280px;
+  gap: 8px;
+  margin: 0 auto;
+  margin-bottom: 16px;
+}
+
+.imgContainer {
+  width: calc((100% - 24px) / 4);
+}
