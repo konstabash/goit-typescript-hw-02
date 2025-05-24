@@ -1,13 +1,18 @@
+import { FormEvent } from "react";
 import s from "./SearchBar.module.css";
 import { FiSearch } from "react-icons/fi";
 
-const SearchBar = ({ handleChangeQuery }) => {
-  const submitForm = (e) => {
-    e.preventDefault();
-    const query = e.target.elements.input.value;
-    handleChangeQuery(query);
-  };
+interface SearchBarProps {
+  handleChangeQuery: (newQuery: string) => void;
+}
 
+const SearchBar = ({ handleChangeQuery }: SearchBarProps) => {
+  const submitForm = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const query = form.elements.namedItem("input") as HTMLInputElement;
+    handleChangeQuery(query.value);
+  };
   return (
     <header className={s.header}>
       <form onSubmit={submitForm}>

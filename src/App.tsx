@@ -9,18 +9,19 @@ import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
 import Modal from "react-modal";
+import { Hits, ItemHit } from "./types/global";
 
 Modal.setAppElement("#root");
 
 function App() {
-  const [hits, setHits] = useState([]);
-  const [query, setQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [hits, setHits] = useState<ItemHit[]>([]);
+  const [query, setQuery] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<ItemHit | null>(null);
 
   useEffect(() => {
     const getData = async () => {
@@ -28,7 +29,7 @@ function App() {
         setIsLoading(true);
         setIsError(false);
 
-        const newImages = await fetchHits(query, page);
+        const newImages = await fetchHits<Hits>(query, page);
         setHits((prev) => [...prev, ...newImages.results]);
         setTotalPages(newImages.total_pages);
       } catch (error) {
@@ -43,7 +44,7 @@ function App() {
     }
   }, [query, page]);
 
-  const handleChangeQuery = (newQuery) => {
+  const handleChangeQuery = (newQuery: string): void => {
     if (newQuery.trim() === "") {
       toast.error("Please enter your request");
       return;
@@ -53,19 +54,19 @@ function App() {
     setPage(1);
   };
 
-  const handleLoadMore = () => {
+  const handleLoadMore = (): void => {
     setPage((prev) => prev + 1);
   };
 
-  const handleImageClick = (id) => {
-    const img = hits.find((i) => i.id === id);
+  const handleImageClick = (id: string): void => {
+    const img: ItemHit | undefined = hits.find((i) => i.id === id);
     if (img) {
       setSelectedImage(img);
       setIsModalOpen(true);
     }
   };
 
-  const closeModal = () => setSelectedImage(null);
+  const closeModal = (): void => setSelectedImage(null);
 
   return (
     <>

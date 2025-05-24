@@ -1,6 +1,12 @@
+import { ItemHit } from "../../types/global";
 import s from "./ImageCard.module.css";
 
-const ImageCard = ({ image, onImageClick }) => {
+interface ImageCardProps {
+  image: ItemHit;
+  onImageClick: (id: string) => void;
+}
+
+const ImageCard = ({ image, onImageClick }: ImageCardProps) => {
   return (
     <div onClick={() => onImageClick(image.id)}>
       <img

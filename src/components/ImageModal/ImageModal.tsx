@@ -1,18 +1,14 @@
 import Modal from "react-modal";
 import s from "./ImageModal.module.css";
+import { ItemHit } from "../../types/global";
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
+interface ImageModalProps {
+  isOpen: boolean;
+  image: ItemHit;
+  onRequestClose: () => void;
+}
 
-const ImageModal = ({ isOpen, image, onRequestClose }) => (
+const ImageModal = ({ isOpen, image, onRequestClose }: ImageModalProps) => (
   <Modal
     isOpen={isOpen}
     onRequestClose={onRequestClose}
@@ -24,7 +20,6 @@ const ImageModal = ({ isOpen, image, onRequestClose }) => (
     {image.urls.regular && (
       <div className={s.imageContainer}>
         <img
-          style={customStyles}
           src={image.urls.regular}
           alt={image.description}
           className={s.fullImage}
